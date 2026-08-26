@@ -6,12 +6,14 @@ export function FilterPills({
   options,
   active,
   currentSearch,
+  labelFor,
 }: {
   label: string;
   paramKey: string;
   options: readonly string[];
   active?: string;
   currentSearch: Record<string, string | undefined>;
+  labelFor?: (value: string) => string;
 }) {
   function hrefFor(value?: string) {
     const params = new URLSearchParams();
@@ -34,7 +36,7 @@ export function FilterPills({
           !active ? "bg-fg text-bg" : "hover:bg-fg hover:text-bg"
         }`}
       >
-        ALL
+        ВСЕ
       </Link>
       {options.map((opt) => (
         <Link
@@ -44,7 +46,7 @@ export function FilterPills({
             active === opt ? "bg-fg text-bg" : "hover:bg-fg hover:text-bg"
           }`}
         >
-          {opt.toUpperCase()}
+          {labelFor ? labelFor(opt) : opt.toUpperCase()}
         </Link>
       ))}
     </div>

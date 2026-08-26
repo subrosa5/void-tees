@@ -1,15 +1,23 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { PRODUCTS, COLLECTIONS } from "@/lib/products";
+import { PRODUCTS, COLLECTIONS, CATEGORY_LABELS } from "@/lib/products";
 import { ProductCard } from "@/components/product-card";
 import { FilterPills } from "@/components/filter-pills";
 import { SortSelect } from "@/components/sort-select";
 
 export const metadata: Metadata = {
-  title: "Shop All Tees — VOID.",
+  title: "Каталог — VOID.",
 };
 
 const CATEGORIES = ["men", "women", "unisex"] as const;
+
+function pluralizeTee(n: number) {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return "футболка";
+  if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) return "футболки";
+  return "футболок";
+}
 
 type SearchParams = {
   category?: string;
@@ -41,23 +49,24 @@ export default async function ShopPage({
   return (
     <div className="mx-auto max-w-[1600px] px-4 py-10 sm:px-6">
       <div className="mb-8 border-b-2 border-fg pb-6">
-        <h1 className="font-display text-5xl sm:text-6xl tracking-tight mb-2">SHOP ALL</h1>
+        <h1 className="font-display text-5xl sm:text-6xl tracking-tight mb-2">ВЕСЬ КАТАЛОГ</h1>
         <p className="font-mono text-xs tracking-[0.1em] text-muted">
-          {products.length} TEE{products.length === 1 ? "" : "S"}
+          {products.length} {pluralizeTee(products.length)}
         </p>
       </div>
 
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3">
           <FilterPills
-            label="CATEGORY"
+            label="КАТЕГОРИЯ"
             paramKey="category"
             options={CATEGORIES}
             active={category}
             currentSearch={params}
+            labelFor={(v) => CATEGORY_LABELS[v as keyof typeof CATEGORY_LABELS]}
           />
           <FilterPills
-            label="COLLECTION"
+            label="КОЛЛЕКЦИЯ"
             paramKey="collection"
             options={COLLECTIONS}
             active={collection}
@@ -71,8 +80,8 @@ export default async function ShopPage({
 
       {products.length === 0 ? (
         <div className="border-2 border-fg py-20 text-center">
-          <p className="font-display text-2xl mb-2">NOTHING HERE</p>
-          <p className="font-mono text-xs text-muted">Try clearing a filter.</p>
+          <p className="font-display text-2xl mb-2">НИЧЕГО НЕ НАЙДЕНО</p>
+          <p className="font-mono text-xs text-muted">Попробуйте сбросить фильтр.</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">

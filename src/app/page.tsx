@@ -8,9 +8,9 @@ import { TruckIcon, ReturnIcon, BadgeIcon, LockIcon } from "@/components/icons";
 const NEW_ARRIVALS = PRODUCTS.filter((p) => p.tag === "NEW" || p.tag === "LIMITED").slice(0, 4);
 
 const CATEGORY_TILES = [
-  { label: "MEN", href: "/shop?category=men", product: PRODUCTS.find((p) => p.category === "men")! },
-  { label: "WOMEN", href: "/shop?category=women", product: PRODUCTS.find((p) => p.category === "women")! },
-  { label: "UNISEX", href: "/shop?category=unisex", product: PRODUCTS.find((p) => p.category === "unisex")! },
+  { label: "МУЖСКОЕ", href: "/shop?category=men", product: PRODUCTS.find((p) => p.category === "men")! },
+  { label: "ЖЕНСКОЕ", href: "/shop?category=women", product: PRODUCTS.find((p) => p.category === "women")! },
+  { label: "УНИСЕКС", href: "/shop?category=unisex", product: PRODUCTS.find((p) => p.category === "unisex")! },
 ];
 
 export default function Home() {
@@ -21,8 +21,8 @@ export default function Home() {
         <BrushField className="absolute inset-0 h-full w-full" />
         <div className="relative mx-auto max-w-[1600px] px-4 pt-14 pb-10 sm:px-6 sm:pt-20">
           <div className="flex items-center justify-between font-mono text-[11px] tracking-[0.15em] opacity-70 mb-6">
-            <span>FASHION FOR THE QUIET HOURS</span>
-            <span className="hidden sm:inline">DROP 003 — ARCTIC</span>
+            <span>ОДЕЖДА ДЛЯ ТИХИХ ЧАСОВ</span>
+            <span className="hidden sm:inline">ДРОП 003 — ARCTIC</span>
           </div>
 
           <h1 className="font-display leading-[0.82] tracking-tight text-[20vw] sm:text-[16vw] md:text-[13rem] select-none">
@@ -31,21 +31,21 @@ export default function Home() {
 
           <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="max-w-md font-mono text-sm tracking-[0.05em] opacity-80">
-              STILL COLD. Heavyweight tees built in monochrome — no noise,
-              just fabric, print, and the space between.
+              STILL COLD. Плотные футболки в монохроме — никакого шума,
+              только ткань, принт и пространство между ними.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/shop"
                 className="border-2 border-bg bg-bg px-6 py-3 font-mono text-xs tracking-[0.15em] text-fg hover:bg-fg hover:text-bg transition-colors duration-150"
               >
-                SHOP NOW
+                В КАТАЛОГ
               </Link>
               <Link
                 href="/shop?collection=ARCTIC"
                 className="border-2 border-bg px-6 py-3 font-mono text-xs tracking-[0.15em] hover:bg-bg hover:text-fg transition-colors duration-150"
               >
-                EXPLORE ARCTIC
+                КАПСУЛА ARCTIC
               </Link>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function Home() {
               <div>
                 <div className="font-display text-2xl tracking-tight">{tile.label}</div>
                 <div className="font-mono text-xs tracking-[0.1em] opacity-60 group-hover:opacity-80">
-                  SHOP {tile.label} →
+                  СМОТРЕТЬ →
                 </div>
               </div>
             </Link>
@@ -83,9 +83,9 @@ export default function Home() {
       {/* NEW ARRIVALS */}
       <section className="mx-auto max-w-[1600px] px-4 py-14 sm:px-6">
         <div className="mb-8 flex items-end justify-between">
-          <h2 className="font-display text-4xl sm:text-5xl tracking-tight">NEW ARRIVALS</h2>
+          <h2 className="font-display text-4xl sm:text-5xl tracking-tight">НОВИНКИ</h2>
           <Link href="/shop" className="font-mono text-xs tracking-[0.15em] hover:opacity-60 whitespace-nowrap">
-            VIEW ALL →
+            ВЕСЬ КАТАЛОГ →
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
@@ -109,20 +109,20 @@ export default function Home() {
           </div>
           <div>
             <p className="font-mono text-xs tracking-[0.15em] opacity-60 mb-4">
-              ARCTIC CAPSULE — 03
+              КАПСУЛА ARCTIC — 03
             </p>
             <blockquote className="font-display text-3xl sm:text-5xl leading-[0.95] tracking-tight mb-6">
-              &ldquo;I KEEP FINDING MYSELF WAITING FOR THE WORLD TO CHANGE.&rdquo;
+              &laquo;Я ВСЁ ЖДУ, КОГДА ИЗМЕНИТСЯ МИР&raquo;
             </blockquote>
             <p className="max-w-md font-mono text-sm opacity-70 mb-8">
-              Cold-wash pigment dye. Condensed type across the back.
-              Two hundred pieces, then it&rsquo;s gone for good.
+              Пигментное крашение с эффектом холодной стирки. Узкий шрифт
+              на спине. Двести штук — и капсулы больше не будет.
             </p>
             <Link
               href="/shop?collection=ARCTIC"
               className="inline-block border-2 border-bg px-6 py-3 font-mono text-xs tracking-[0.15em] hover:bg-bg hover:text-fg transition-colors duration-150"
             >
-              SHOP THE CAPSULE
+              СМОТРЕТЬ КАПСУЛУ
             </Link>
           </div>
         </div>
@@ -132,10 +132,10 @@ export default function Home() {
       <section className="mx-auto max-w-[1600px] px-4 py-10 sm:px-6">
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-4">
           {[
-            { icon: TruckIcon, title: "MADE TO ORDER", copy: "Ships in 5–7 days" },
-            { icon: ReturnIcon, title: "EASY RETURNS", copy: "Within 15 days" },
-            { icon: BadgeIcon, title: "QUALITY ASSURED", copy: "260gsm+ heavyweight cotton" },
-            { icon: LockIcon, title: "DEMO CHECKOUT", copy: "Preview only — no real payment" },
+            { icon: TruckIcon, title: "НА ЗАКАЗ", copy: "Отправка за 5–7 дней" },
+            { icon: ReturnIcon, title: "ЛЁГКИЙ ВОЗВРАТ", copy: "В течение 15 дней" },
+            { icon: BadgeIcon, title: "КАЧЕСТВО", copy: "Плотный хлопок от 260 г/м²" },
+            { icon: LockIcon, title: "ДЕМО-ОПЛАТА", copy: "Только превью — без реальных платежей" },
           ].map(({ icon: Icon, title, copy }) => (
             <div key={title} className="flex flex-col items-start gap-2">
               <Icon className="h-6 w-6" />

@@ -39,9 +39,9 @@ export default async function ProductPage({
   return (
     <div className="mx-auto max-w-[1600px] px-4 py-10 sm:px-6">
       <nav className="mb-8 font-mono text-[11px] tracking-[0.1em] text-muted">
-        <Link href="/" className="hover:text-fg">HOME</Link>
+        <Link href="/" className="hover:text-fg">ГЛАВНАЯ</Link>
         <span className="mx-2">/</span>
-        <Link href="/shop" className="hover:text-fg">SHOP</Link>
+        <Link href="/shop" className="hover:text-fg">КАТАЛОГ</Link>
         <span className="mx-2">/</span>
         <span className="text-fg">{product.name}</span>
       </nav>
@@ -51,7 +51,7 @@ export default async function ProductPage({
       {related.length > 0 && (
         <section className="mt-20 border-t-2 border-fg pt-10">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight mb-6">
-            MORE FROM {product.collection}
+            ЕЩЁ ИЗ {product.collection}
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
             {related.map((p) => (

@@ -1,26 +1,41 @@
 export type TeeColor = "black" | "white" | "grey" | "ice";
 export type PrintKind = "wordmark" | "graphic" | "patch" | "stripe" | "quote";
+export type Category = "men" | "women" | "unisex";
+export type Tag = "NEW" | "LIMITED" | "SOLD_OUT" | "RESTOCK";
 
 export type Product = {
   slug: string;
   name: string;
   price: number;
   compareAt?: number;
-  category: "men" | "women" | "unisex";
+  category: Category;
   collection: string;
   color: TeeColor;
   print: PrintKind;
-  tag?: "NEW" | "LIMITED" | "SOLD OUT" | "RESTOCK";
+  tag?: Tag;
   sizes: string[];
   description: string;
   details: string[];
+};
+
+export const CATEGORY_LABELS: Record<Category, string> = {
+  men: "МУЖСКОЕ",
+  women: "ЖЕНСКОЕ",
+  unisex: "УНИСЕКС",
+};
+
+export const TAG_LABELS: Record<Tag, string> = {
+  NEW: "НОВИНКА",
+  LIMITED: "ЛИМИТ",
+  SOLD_OUT: "РАСПРОДАНО",
+  RESTOCK: "РЕСТОК",
 };
 
 export const PRODUCTS: Product[] = [
   {
     slug: "void-wordmark-tee-black",
     name: "VOID WORDMARK TEE",
-    price: 68,
+    price: 6990,
     category: "unisex",
     collection: "CORE",
     color: "black",
@@ -28,19 +43,19 @@ export const PRODUCTS: Product[] = [
     tag: "NEW",
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
-      "The essential. 260gsm heavyweight cotton, boxy oversized fit, dropped shoulder. Puff-print wordmark across the chest.",
+      "Базовая модель. Плотный хлопок 260 г/м², оверсайз-крой, опущенная линия плеча. Объёмная печать логотипа на груди.",
     details: [
-      "260gsm 100% combed cotton",
-      "Oversized boxy fit — size down for regular",
-      "Puff-print front graphic",
-      "Garment-dyed, enzyme washed",
-      "Made to order — ships in 5–7 days",
+      "260 г/м², 100% чёсаный хлопок",
+      "Оверсайз-крой — берите на размер меньше для обычной посадки",
+      "Puff-принт на груди",
+      "Гарм-дай, ферментная стирка",
+      "Изготовление на заказ — отправка за 5–7 дней",
     ],
   },
   {
     slug: "still-cold-tee-ice",
     name: "STILL COLD TEE",
-    price: 72,
+    price: 7490,
     category: "unisex",
     collection: "ARCTIC",
     color: "ice",
@@ -48,37 +63,37 @@ export const PRODUCTS: Product[] = [
     tag: "LIMITED",
     sizes: ["S", "M", "L", "XL"],
     description:
-      "Part of the ARCTIC capsule. Back print manifesto in condensed type, ice-grey pigment dye that fades with every wash.",
+      "Часть капсулы ARCTIC. Принт-манифест на спине, узкий гротеск, ледяной пигментный краситель, который выцветает с каждой стиркой.",
     details: [
-      "240gsm cotton jersey",
-      "Pigment-dyed for a faded vintage hand-feel",
-      "Full back print + small chest hit",
-      "Relaxed fit",
-      "Limited run of 200 — won't restock",
+      "240 г/м², хлопковый джерси",
+      "Пигментное крашение для выгоревшего винтажного эффекта",
+      "Полный принт на спине + небольшой акцент на груди",
+      "Свободная посадка",
+      "Лимитированная партия — 200 штук, без рестока",
     ],
   },
   {
     slug: "no-signal-tee-black",
     name: "NO SIGNAL GRAPHIC TEE",
-    price: 64,
+    price: 6500,
     category: "men",
     collection: "CORE",
     color: "black",
     print: "graphic",
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
-      "Static-glitch graphic across the back, small chest logo. Heavyweight boxy cut built to be lived in.",
+      "Графика в стиле статичных помех на спине, небольшой логотип на груди. Плотный boxy-крой для повседневной носки.",
     details: [
-      "270gsm heavyweight cotton",
-      "Screen-printed graphic, cracked-ink finish",
-      "Boxy fit, ribbed collar",
-      "Pre-shrunk",
+      "270 г/м², плотный хлопок",
+      "Шелкография, эффект потрескавшихся чернил",
+      "Boxy-крой, рибана на воротнике",
+      "Предварительная усадка ткани",
     ],
   },
   {
     slug: "aurora-patch-tee-white",
     name: "AURORA PATCH TEE",
-    price: 70,
+    price: 7200,
     category: "women",
     collection: "ARCTIC",
     color: "white",
@@ -86,37 +101,37 @@ export const PRODUCTS: Product[] = [
     tag: "NEW",
     sizes: ["XS", "S", "M", "L"],
     description:
-      "Woven patch on the chest, clean off-white body. The quiet piece in a loud capsule.",
+      "Тканевая нашивка на груди, чистый молочно-белый цвет. Тихая вещь в громкой капсуле.",
     details: [
-      "220gsm combed cotton",
-      "Woven chenille patch, chain-stitch border",
-      "Cropped relaxed fit",
-      "Side-seamed, no distortion after wash",
+      "220 г/м², чёсаный хлопок",
+      "Нашивка из шенилла, окантовка цепным стежком",
+      "Укороченный свободный крой",
+      "Боковые швы — не деформируется после стирки",
     ],
   },
   {
     slug: "grid-stripe-tee-grey",
     name: "GRID STRIPE TEE",
-    price: 66,
+    price: 6800,
     category: "unisex",
     collection: "CORE",
     color: "grey",
     print: "stripe",
     sizes: ["S", "M", "L", "XL"],
     description:
-      "Engineered stripe across the chest referencing technical outerwear. Melange grey body.",
+      "Инженерная полоса на груди, отсылающая к технической верхней одежде. Меланжевый серый цвет.",
     details: [
-      "250gsm cotton melange",
-      "Engineered stripe panel",
-      "Straight fit",
-      "Reinforced neck tape",
+      "250 г/м², хлопковый меланж",
+      "Инженерная полоса-панель",
+      "Прямой крой",
+      "Усиленная лента на горловине",
     ],
   },
   {
     slug: "blackout-tee-black",
     name: "BLACKOUT TEE",
-    price: 74,
-    compareAt: 88,
+    price: 7600,
+    compareAt: 9200,
     category: "men",
     collection: "BLACKOUT",
     color: "black",
@@ -124,54 +139,54 @@ export const PRODUCTS: Product[] = [
     tag: "RESTOCK",
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
-      "Triple-black on triple-black. Tonal print, tonal stitching. As close to a void as fabric gets.",
+      "Тройной чёрный на тройном чёрном. Тональный принт, тональная строчка. Ближе к пустоте ткань уже не бывает.",
     details: [
-      "280gsm heavyweight cotton",
-      "Tonal puff print, barely-there sheen",
-      "Oversized fit",
-      "Double-needle hem",
+      "280 г/м², плотный хлопок",
+      "Тональный puff-принт, едва заметный блеск",
+      "Оверсайз-крой",
+      "Двойная строчка по низу",
     ],
   },
   {
     slug: "waiting-room-tee-ice",
     name: "WAITING ROOM TEE",
-    price: 70,
+    price: 7200,
     category: "unisex",
     collection: "ARCTIC",
     color: "ice",
     print: "quote",
     sizes: ["S", "M", "L", "XL"],
     description:
-      "\"I keep finding myself waiting for the world to change.\" Full chest typographic print, cold-wash finish.",
+      "«Я всё жду, когда изменится мир». Крупный типографский принт на груди, эффект холодной стирки.",
     details: [
-      "240gsm cotton jersey",
-      "Cold-wash for a worn-in feel from day one",
-      "Oversized fit",
-      "Ribbed crew neck",
+      "240 г/м², хлопковый джерси",
+      "Эффект холодной стирки — потёртый вид с первого дня",
+      "Оверсайз-крой",
+      "Рибана на горловине",
     ],
   },
   {
     slug: "patch-logo-tee-white",
     name: "PATCH LOGO TEE",
-    price: 62,
+    price: 6400,
     category: "women",
     collection: "CORE",
     color: "white",
     print: "patch",
     sizes: ["XS", "S", "M", "L"],
     description:
-      "Minimal chest patch, clean construction. The everyday layer under the heavier pieces.",
+      "Минималистичная нашивка на груди, аккуратная конструкция. Повседневный слой под более тяжёлые вещи.",
     details: [
-      "220gsm combed cotton",
-      "Embroidered chest patch",
-      "Relaxed fit",
-      "Pre-shrunk, colorfast",
+      "220 г/м², чёсаный хлопок",
+      "Вышитая нашивка на груди",
+      "Свободная посадка",
+      "Предварительная усадка, стойкий цвет",
     ],
   },
   {
     slug: "static-graphic-tee-grey",
     name: "STATIC GRAPHIC TEE",
-    price: 68,
+    price: 6900,
     category: "men",
     collection: "BLACKOUT",
     color: "grey",
@@ -179,12 +194,12 @@ export const PRODUCTS: Product[] = [
     tag: "LIMITED",
     sizes: ["M", "L", "XL", "XXL"],
     description:
-      "All-over static graphic bleeding off the sleeves. Heavyweight and boxy, built for the drop.",
+      "Крупная графика статичных помех, переходящая на рукава. Плотный boxy-крой, создан специально для дропа.",
     details: [
-      "270gsm heavyweight cotton",
-      "All-over screen print",
-      "Oversized boxy fit",
-      "Limited run",
+      "270 г/м², плотный хлопок",
+      "Принт на всю поверхность",
+      "Оверсайз boxy-крой",
+      "Лимитированная партия",
     ],
   },
 ];
@@ -196,5 +211,5 @@ export function getProduct(slug: string) {
 }
 
 export function formatPrice(n: number) {
-  return `$${n.toFixed(2)}`;
+  return `${n.toLocaleString("ru-RU")} ₽`;
 }

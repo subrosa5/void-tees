@@ -28,23 +28,23 @@ export function CartDrawer() {
     <div className="fixed inset-0 z-50 flex justify-end">
       <button
         type="button"
-        aria-label="Close cart"
+        aria-label="Закрыть корзину"
         onClick={closeCart}
         className="absolute inset-0 bg-fg/60 cursor-pointer"
       />
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Shopping bag"
+        aria-label="Корзина"
         className="relative flex h-full w-full max-w-md flex-col border-l-2 border-fg bg-bg"
       >
         <div className="flex items-center justify-between border-b-2 border-fg px-5 py-4">
-          <h2 className="font-display text-2xl tracking-tight">YOUR BAG</h2>
+          <h2 className="font-display text-2xl tracking-tight">ВАША КОРЗИНА</h2>
           <button
             type="button"
             onClick={closeCart}
             className="flex h-11 w-11 items-center justify-center border-2 border-fg cursor-pointer hover:bg-fg hover:text-bg transition-colors duration-150"
-            aria-label="Close cart"
+            aria-label="Закрыть корзину"
           >
             ✕
           </button>
@@ -53,14 +53,14 @@ export function CartDrawer() {
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
             <p className="font-mono text-sm tracking-[0.1em] text-muted">
-              YOUR BAG IS EMPTY
+              КОРЗИНА ПУСТА
             </p>
             <Link
               href="/shop"
               onClick={closeCart}
               className="border-2 border-fg px-6 py-3 font-mono text-xs tracking-[0.15em] hover:bg-fg hover:text-bg transition-colors duration-150"
             >
-              CONTINUE SHOPPING
+              ПРОДОЛЖИТЬ ПОКУПКИ
             </Link>
           </div>
         ) : (
@@ -85,7 +85,7 @@ export function CartDrawer() {
                           {product.name}
                         </p>
                         <p className="font-mono text-xs text-muted mt-1">
-                          SIZE {line.size}
+                          РАЗМЕР {line.size}
                         </p>
                       </div>
                       <div className="flex items-center justify-between">
@@ -94,7 +94,7 @@ export function CartDrawer() {
                             type="button"
                             className="h-8 w-8 cursor-pointer hover:bg-fg hover:text-bg transition-colors"
                             onClick={() => setQty(line.slug, line.size, line.qty - 1)}
-                            aria-label="Decrease quantity"
+                            aria-label="Уменьшить количество"
                           >
                             −
                           </button>
@@ -105,7 +105,7 @@ export function CartDrawer() {
                             type="button"
                             className="h-8 w-8 cursor-pointer hover:bg-fg hover:text-bg transition-colors"
                             onClick={() => setQty(line.slug, line.size, line.qty + 1)}
-                            aria-label="Increase quantity"
+                            aria-label="Увеличить количество"
                           >
                             +
                           </button>
@@ -119,9 +119,9 @@ export function CartDrawer() {
                       type="button"
                       onClick={() => removeLine(line.slug, line.size)}
                       className="self-start font-mono text-xs text-muted hover:text-fg cursor-pointer"
-                      aria-label={`Remove ${product.name} size ${line.size}`}
+                      aria-label={`Удалить ${product.name}, размер ${line.size}`}
                     >
-                      REMOVE
+                      УДАЛИТЬ
                     </button>
                   </li>
                 );
@@ -130,18 +130,18 @@ export function CartDrawer() {
 
             <div className="border-t-2 border-fg px-5 py-5">
               <div className="flex items-center justify-between font-mono text-sm mb-1">
-                <span>SUBTOTAL</span>
+                <span>ПРОМЕЖУТОЧНЫЙ ИТОГ</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
               <p className="font-mono text-[10px] text-muted mb-4">
-                SHIPPING &amp; TAXES CALCULATED AT CHECKOUT
+                ДОСТАВКА И НАЛОГИ РАССЧИТЫВАЮТСЯ ПРИ ОФОРМЛЕНИИ
               </p>
               <Link
                 href="/checkout"
                 onClick={closeCart}
                 className="block w-full border-2 border-fg bg-fg py-4 text-center font-mono text-xs tracking-[0.15em] text-bg hover:bg-bg hover:text-fg transition-colors duration-150"
               >
-                CHECKOUT
+                ОФОРМИТЬ ЗАКАЗ
               </Link>
             </div>
           </>

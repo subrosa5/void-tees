@@ -3,10 +3,10 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 const OPTIONS = [
-  { value: "featured", label: "FEATURED" },
-  { value: "price-asc", label: "PRICE: LOW TO HIGH" },
-  { value: "price-desc", label: "PRICE: HIGH TO LOW" },
-  { value: "name", label: "NAME A–Z" },
+  { value: "featured", label: "ПО УМОЛЧАНИЮ" },
+  { value: "price-asc", label: "ЦЕНА: ПО ВОЗРАСТАНИЮ" },
+  { value: "price-desc", label: "ЦЕНА: ПО УБЫВАНИЮ" },
+  { value: "name", label: "ПО НАЗВАНИЮ А–Я" },
 ];
 
 export function SortSelect() {
@@ -18,7 +18,7 @@ export function SortSelect() {
   return (
     <div className="flex items-center gap-2">
       <label htmlFor="sort" className="font-mono text-[11px] tracking-[0.1em] text-muted">
-        SORT
+        СОРТИРОВКА
       </label>
       <select
         id="sort"

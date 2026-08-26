@@ -1,9 +1,9 @@
 const ITEMS = [
-  "FREE SHIPPING OVER $150",
-  "DROP 003 — ARCTIC CAPSULE",
-  "LIMITED RUN — WON'T RESTOCK",
-  "HEAVYWEIGHT COTTON, ALWAYS",
-  "MADE TO ORDER",
+  "БЕСПЛАТНАЯ ДОСТАВКА ОТ 15 000 ₽",
+  "ДРОП 003 — КАПСУЛА ARCTIC",
+  "ЛИМИТИРОВАННАЯ ПАРТИЯ — БЕЗ РЕСТОКА",
+  "ТОЛЬКО ПЛОТНЫЙ ХЛОПОК",
+  "ИЗГОТОВЛЕНИЕ НА ЗАКАЗ",
 ];
 
 export function Marquee() {

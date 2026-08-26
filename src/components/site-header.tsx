@@ -6,11 +6,11 @@ import { Marquee } from "@/components/marquee";
 import { useCart } from "@/components/cart-context";
 
 const NAV = [
-  { label: "SHOP ALL", href: "/shop" },
+  { label: "КАТАЛОГ", href: "/shop" },
   { label: "CORE", href: "/shop?collection=CORE" },
   { label: "ARCTIC", href: "/shop?collection=ARCTIC" },
   { label: "BLACKOUT", href: "/shop?collection=BLACKOUT" },
-  { label: "ABOUT", href: "/about" },
+  { label: "О БРЕНДЕ", href: "/about" },
 ];
 
 export function SiteHeader() {
@@ -26,7 +26,7 @@ export function SiteHeader() {
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] md:hidden cursor-pointer"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={menuOpen}
           >
             <span
@@ -52,22 +52,22 @@ export function SiteHeader() {
           <Link
             href="/"
             className="font-display text-3xl sm:text-4xl tracking-tight leading-none select-none"
-            aria-label="VOID home"
+            aria-label="VOID — на главную"
           >
             VOID<span aria-hidden="true">.</span>
           </Link>
 
           <div className="flex items-center gap-4 font-mono text-xs tracking-[0.12em]">
             <Link href="/about" className="hidden md:inline hover:opacity-60 transition-opacity duration-150">
-              ABOUT
+              О БРЕНДЕ
             </Link>
             <button
               type="button"
               onClick={openCart}
               className="flex h-11 min-w-11 items-center justify-center gap-2 border-2 border-fg px-3 cursor-pointer hover:bg-fg hover:text-bg transition-colors duration-150"
-              aria-label={`Open cart, ${count} item${count === 1 ? "" : "s"}`}
+              aria-label={`Открыть корзину, товаров: ${count}`}
             >
-              BAG
+              КОРЗИНА
               <span className="font-mono">({count})</span>
             </button>
           </div>

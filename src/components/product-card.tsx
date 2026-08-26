@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { TeeGraphic } from "@/components/tee-graphic";
-import { formatPrice, type Product } from "@/lib/products";
+import { formatPrice, TAG_LABELS, type Product } from "@/lib/products";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="relative aspect-[4/5] overflow-hidden border-b-2 border-fg bg-hairline/30">
         {product.tag && (
           <span className="absolute left-2 top-2 z-10 border border-fg bg-bg px-2 py-1 font-mono text-[10px] tracking-[0.1em]">
-            {product.tag}
+            {TAG_LABELS[product.tag]}
           </span>
         )}
         <TeeGraphic

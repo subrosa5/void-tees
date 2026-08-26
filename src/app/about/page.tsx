@@ -3,8 +3,8 @@ import Link from "next/link";
 import { BrushField } from "@/components/brush-field";
 
 export const metadata: Metadata = {
-  title: "About — VOID.",
-  description: "The story behind VOID.",
+  title: "О бренде — VOID.",
+  description: "История бренда VOID.",
 };
 
 export default function AboutPage() {
@@ -13,48 +13,50 @@ export default function AboutPage() {
       <section className="relative overflow-hidden border-b-2 border-fg bg-fg text-bg">
         <BrushField className="absolute inset-0 h-full w-full" />
         <div className="relative mx-auto max-w-[1600px] px-4 py-20 sm:px-6">
-          <p className="font-mono text-xs tracking-[0.15em] opacity-60 mb-4">ABOUT</p>
+          <p className="font-mono text-xs tracking-[0.15em] opacity-60 mb-4">О БРЕНДЕ</p>
           <h1 className="font-display text-5xl sm:text-7xl tracking-tight leading-[0.9]">
-            NOTHING LASTS.
+            НИЧТО НЕ ВЕЧНО.
             <br />
-            EVERYTHING RETURNS.
+            ВСЁ ВОЗВРАЩАЕТСЯ.
           </h1>
         </div>
       </section>
 
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 space-y-6 text-sm leading-relaxed">
         <p>
-          VOID. started as one boxy tee, printed in a friend&rsquo;s garage,
-          sold out of a duffel bag at shows. No mood boards, no seasons —
-          just heavyweight cotton, one print at a time.
+          VOID. начинался с одной boxy-футболки, напечатанной в гараже у
+          друга, и продавался из спортивной сумки на концертах. Никаких
+          мудбордов, никаких сезонов — только плотный хлопок и один принт
+          за раз.
         </p>
         <p>
-          Every drop is small on purpose. We run a piece until the fabric is
-          gone, then it&rsquo;s gone. No pre-orders, no restocked &ldquo;limited
-          editions.&rdquo; If you see it, that&rsquo;s the only time you&rsquo;ll
-          see it.
+          Каждый дроп маленький — намеренно. Мы выпускаем вещь, пока не
+          закончится ткань, а потом её больше нет. Никаких предзаказов,
+          никаких «лимитированных» рестоков. Если вы её увидели — это
+          единственный раз, когда вы её увидите.
         </p>
         <p>
-          The palette stays monochrome because the print should do the
-          talking — black, white, grey, and the occasional ice-blue for the
-          ARCTIC capsule. Nothing else gets in the way.
+          Палитра остаётся монохромной, потому что говорить должен принт —
+          чёрный, белый, серый и изредка ледяной синий для капсулы ARCTIC.
+          Больше ничего не должно отвлекать.
         </p>
         <p className="font-mono text-xs tracking-[0.1em] text-muted pt-4 border-t border-hairline">
-          This site is an independent, unaffiliated design concept and demo
-          storefront — no real orders are processed.
+          Этот сайт — независимый дизайн-концепт и демо-витрина, не
+          связанная ни с одним реальным брендом. Реальные заказы не
+          обрабатываются.
         </p>
       </section>
 
       <section className="border-t-2 border-fg bg-hairline/20">
         <div className="mx-auto max-w-[1600px] px-4 py-16 sm:px-6 text-center">
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight mb-6">
-            READY TO WEAR THE SILENCE?
+            ГОТОВЫ НОСИТЬ ТИШИНУ?
           </h2>
           <Link
             href="/shop"
             className="inline-block border-2 border-fg px-8 py-4 font-mono text-xs tracking-[0.15em] hover:bg-fg hover:text-bg transition-colors duration-150"
           >
-            SHOP ALL TEES
+            ВЕСЬ КАТАЛОГ
           </Link>
         </div>
       </section>
