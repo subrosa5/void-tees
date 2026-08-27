@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { PRODUCTS, COLLECTIONS, CATEGORY_LABELS } from "@/lib/products";
+import { COLLECTIONS, CATEGORY_LABELS } from "@/lib/products";
+import { getStoreData } from "@/lib/blob-store";
 import { ProductCard } from "@/components/product-card";
 import { FilterPills } from "@/components/filter-pills";
 import { SortSelect } from "@/components/sort-select";
@@ -8,6 +9,8 @@ import { SortSelect } from "@/components/sort-select";
 export const metadata: Metadata = {
   title: "Каталог — VOID.",
 };
+
+export const dynamic = "force-dynamic";
 
 const CATEGORIES = ["men", "women", "unisex"] as const;
 
@@ -32,8 +35,9 @@ export default async function ShopPage({
 }) {
   const params = await searchParams;
   const { category, collection, sort } = params;
+  const { products: allProducts } = await getStoreData();
 
-  let products = PRODUCTS.filter((p) => {
+  let products = allProducts.filter((p) => {
     if (category && p.category !== category) return false;
     if (collection && p.collection !== collection) return false;
     return true;

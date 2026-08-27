@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Доставка и возврат — VOID." };
+export const dynamic = "force-dynamic";
 
 export default function ShippingPage() {
   return (

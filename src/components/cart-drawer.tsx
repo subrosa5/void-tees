@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { useCart } from "@/components/cart-context";
-import { PRODUCTS, formatPrice } from "@/lib/products";
-import { TeeGraphic } from "@/components/tee-graphic";
+import { formatPrice } from "@/lib/products";
+import { ProductVisual } from "@/components/product-visual";
 
 export function CartDrawer() {
-  const { isOpen, closeCart, lines, removeLine, setQty, subtotal } = useCart();
+  const { isOpen, closeCart, lines, removeLine, setQty, subtotal, products } = useCart();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -67,17 +67,12 @@ export function CartDrawer() {
           <>
             <ul className="flex-1 overflow-y-auto divide-y-2 divide-fg">
               {lines.map((line) => {
-                const product = PRODUCTS.find((p) => p.slug === line.slug);
+                const product = products.find((p) => p.slug === line.slug);
                 if (!product) return null;
                 return (
                   <li key={`${line.slug}-${line.size}`} className="flex gap-4 px-5 py-4">
                     <div className="h-24 w-20 shrink-0 border-2 border-fg bg-hairline/30">
-                      <TeeGraphic
-                        color={product.color}
-                        print={product.print}
-                        name={product.name}
-                        className="h-full w-full"
-                      />
+                      <ProductVisual product={product} className="h-full w-full" />
                     </div>
                     <div className="flex flex-1 flex-col justify-between min-w-0">
                       <div>

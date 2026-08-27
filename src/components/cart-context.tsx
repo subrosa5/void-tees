@@ -8,7 +8,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { PRODUCTS, type Product } from "@/lib/products";
+import { useStore } from "@/lib/store-context";
+import type { Product } from "@/lib/products";
 
 export type CartLine = {
   slug: string;
@@ -27,16 +28,15 @@ type CartContextValue = {
   count: number;
   subtotal: number;
   lastAdded: string | null;
+  /** Current catalog (live admin edits included) — for looking up line-item details. */
+  products: Product[];
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "void-tees-cart-v1";
 
-function productOf(slug: string): Product | undefined {
-  return PRODUCTS.find((p) => p.slug === slug);
-}
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { products } = useStore();
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [lastAdded, setLastAdded] = useState<string | null>(null);
@@ -97,10 +97,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const subtotal = useMemo(
     () =>
       lines.reduce((sum, l) => {
-        const p = productOf(l.slug);
+        const p = products.find((prod) => prod.slug === l.slug);
         return sum + (p ? p.price * l.qty : 0);
       }, 0),
-    [lines]
+    [lines, products]
   );
 
   const value: CartContextValue = {
@@ -114,6 +114,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     count,
     subtotal,
     lastAdded,
+    products,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

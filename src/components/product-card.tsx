@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TeeGraphic } from "@/components/tee-graphic";
+import { ProductVisual } from "@/components/product-visual";
 import { formatPrice, TAG_LABELS, type Product } from "@/lib/products";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -14,10 +14,8 @@ export function ProductCard({ product }: { product: Product }) {
             {TAG_LABELS[product.tag]}
           </span>
         )}
-        <TeeGraphic
-          color={product.color}
-          print={product.print}
-          name={product.name}
+        <ProductVisual
+          product={product}
           className="h-full w-full transition-transform duration-300 group-hover:scale-105"
         />
       </div>

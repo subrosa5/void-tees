@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   description: "История бренда VOID.",
 };
 
+// Page content is static, but the shared (store) header renders the
+// admin-editable marquee — force this route to render fresh too so a
+// settings change shows up here without a redeploy.
+export const dynamic = "force-dynamic";
+
 export default function AboutPage() {
   return (
     <div>

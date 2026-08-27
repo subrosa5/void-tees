@@ -13,13 +13,13 @@ const NAV = [
   { label: "О БРЕНДЕ", href: "/about" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ marqueeText }: { marqueeText: string }) {
   const { count, openCart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-bg">
-      <Marquee />
+      <Marquee text={marqueeText} />
       <div className="border-b-2 border-fg">
         <div className="mx-auto flex max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
           <button

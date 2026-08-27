@@ -16,6 +16,24 @@ export type Product = {
   sizes: string[];
   description: string;
   details: string[];
+  /** Admin-uploaded product photo. Falls back to the illustrated TeeGraphic when unset. */
+  image?: string;
+};
+
+export type SiteSettings = {
+  heroTagline: string;
+  marqueeText: string;
+  freeShippingThreshold: number;
+  flatShippingRate: number;
+};
+
+export const DEFAULT_SETTINGS: SiteSettings = {
+  heroTagline:
+    "STILL COLD. Плотные футболки в монохроме — никакого шума, только ткань, принт и пространство между ними.",
+  marqueeText:
+    "БЕСПЛАТНАЯ ДОСТАВКА ОТ 15 000 ₽ /// ДРОП 003 — КАПСУЛА ARCTIC /// ЛИМИТИРОВАННАЯ ПАРТИЯ — БЕЗ РЕСТОКА /// ТОЛЬКО ПЛОТНЫЙ ХЛОПОК /// ИЗГОТОВЛЕНИЕ НА ЗАКАЗ /// ФИРМА ВЕНИКОВ НЕ ВЯЖЕТ",
+  freeShippingThreshold: 15000,
+  flatShippingRate: 800,
 };
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -31,6 +49,12 @@ export const TAG_LABELS: Record<Tag, string> = {
   RESTOCK: "РЕСТОК",
 };
 
+/**
+ * Seed catalog. Used as the starting point the first time the Blob store is
+ * written, and as a fallback if Blob storage isn't configured yet. Once the
+ * store exists, live data (including admin price/photo edits) comes from
+ * `getStoreData()` in `blob-store.ts` instead of this array.
+ */
 export const PRODUCTS: Product[] = [
   {
     slug: "void-wordmark-tee-black",

@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { PRODUCTS, getProduct } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
+import { getStoreData } from "@/lib/blob-store";
 import { ProductDetail } from "@/components/product-detail";
 import { ProductCard } from "@/components/product-card";
 
+export const dynamic = "force-dynamic";
+
+// Slugs are fixed (admin only edits price/photo, not the catalog itself),
+// so we can still pre-list valid params — `dynamic = "force-dynamic"` above
+// makes Next fetch fresh data on every request rather than caching the HTML.
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
 }
@@ -15,7 +21,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const { products } = await getStoreData();
+  const product = products.find((p) => p.slug === slug);
   if (!product) return {};
   return {
     title: `${product.name} — VOID.`,
@@ -29,12 +36,13 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const { products } = await getStoreData();
+  const product = products.find((p) => p.slug === slug);
   if (!product) notFound();
 
-  const related = PRODUCTS.filter(
-    (p) => p.slug !== product.slug && p.collection === product.collection
-  ).slice(0, 4);
+  const related = products
+    .filter((p) => p.slug !== product.slug && p.collection === product.collection)
+    .slice(0, 4);
 
   return (
     <div className="mx-auto max-w-[1600px] px-4 py-10 sm:px-6">

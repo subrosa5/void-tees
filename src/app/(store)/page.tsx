@@ -1,19 +1,24 @@
 import Link from "next/link";
-import { PRODUCTS } from "@/lib/products";
+import { getStoreData } from "@/lib/blob-store";
 import { ProductCard } from "@/components/product-card";
-import { TeeGraphic } from "@/components/tee-graphic";
+import { ProductVisual } from "@/components/product-visual";
 import { BrushField } from "@/components/brush-field";
 import { TruckIcon, ReturnIcon, BadgeIcon, LockIcon } from "@/components/icons";
+import type { Product } from "@/lib/products";
 
-const NEW_ARRIVALS = PRODUCTS.filter((p) => p.tag === "NEW" || p.tag === "LIMITED").slice(0, 4);
+export const dynamic = "force-dynamic";
 
-const CATEGORY_TILES = [
-  { label: "МУЖСКОЕ", href: "/shop?category=men", product: PRODUCTS.find((p) => p.category === "men")! },
-  { label: "ЖЕНСКОЕ", href: "/shop?category=women", product: PRODUCTS.find((p) => p.category === "women")! },
-  { label: "УНИСЕКС", href: "/shop?category=unisex", product: PRODUCTS.find((p) => p.category === "unisex")! },
-];
+export default async function Home() {
+  const { products, settings } = await getStoreData();
+  const NEW_ARRIVALS = products.filter((p) => p.tag === "NEW" || p.tag === "LIMITED").slice(0, 4);
+  const arcticProduct = products.find((p) => p.collection === "ARCTIC") ?? products[0];
 
-export default function Home() {
+  const CATEGORY_TILES: { label: string; href: string; product: Product }[] = [
+    { label: "МУЖСКОЕ", href: "/shop?category=men", product: products.find((p) => p.category === "men")! },
+    { label: "ЖЕНСКОЕ", href: "/shop?category=women", product: products.find((p) => p.category === "women")! },
+    { label: "УНИСЕКС", href: "/shop?category=unisex", product: products.find((p) => p.category === "unisex")! },
+  ];
+
   return (
     <>
       {/* HERO */}
@@ -31,8 +36,7 @@ export default function Home() {
 
           <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="max-w-md font-mono text-sm tracking-[0.05em] opacity-80">
-              STILL COLD. Плотные футболки в монохроме — никакого шума,
-              только ткань, принт и пространство между ними.
+              {settings.heroTagline}
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
@@ -62,12 +66,7 @@ export default function Home() {
               className="group flex items-center gap-4 px-6 py-8 hover:bg-bg hover:text-fg transition-colors duration-200"
             >
               <div className="h-20 w-16 shrink-0 border border-bg/40 group-hover:border-fg/40 bg-bg/5">
-                <TeeGraphic
-                  color={tile.product.color}
-                  print={tile.product.print}
-                  name={tile.product.name}
-                  className="h-full w-full"
-                />
+                <ProductVisual product={tile.product} className="h-full w-full" />
               </div>
               <div>
                 <div className="font-display text-2xl tracking-tight">{tile.label}</div>
@@ -100,12 +99,7 @@ export default function Home() {
         <BrushField className="absolute inset-0 h-full w-full" invert={false} />
         <div className="relative mx-auto max-w-[1600px] px-4 py-20 sm:px-6 grid gap-10 md:grid-cols-2 md:items-center">
           <div className="h-64 sm:h-80 md:h-96 border-2 border-bg/40 bg-bg/5 mx-auto w-48 sm:w-56 md:w-64">
-            <TeeGraphic
-              color="ice"
-              print="quote"
-              name="Still Cold Tee"
-              className="h-full w-full"
-            />
+            <ProductVisual product={arcticProduct} className="h-full w-full" />
           </div>
           <div>
             <p className="font-mono text-xs tracking-[0.15em] opacity-60 mb-4">

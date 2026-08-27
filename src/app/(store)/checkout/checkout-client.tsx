@@ -3,13 +3,19 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/cart-context";
-import { PRODUCTS, formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
 
-export default function CheckoutPage() {
-  const { lines, subtotal } = useCart();
+export function CheckoutClient({
+  freeShippingThreshold,
+  flatShippingRate,
+}: {
+  freeShippingThreshold: number;
+  flatShippingRate: number;
+}) {
+  const { lines, subtotal, products } = useCart();
   const [placed, setPlaced] = useState(false);
 
-  const shipping = subtotal > 15000 || subtotal === 0 ? 0 : 800;
+  const shipping = subtotal > freeShippingThreshold || subtotal === 0 ? 0 : flatShippingRate;
   const total = subtotal + shipping;
 
   if (placed) {
@@ -108,7 +114,7 @@ export default function CheckoutPage() {
           <span className="font-mono text-xs tracking-[0.1em] block mb-4">ВАШ ЗАКАЗ</span>
           <ul className="divide-y-2 divide-fg border-2 border-fg mb-4">
             {lines.map((line) => {
-              const product = PRODUCTS.find((p) => p.slug === line.slug);
+              const product = products.find((p) => p.slug === line.slug);
               if (!product) return null;
               return (
                 <li key={`${line.slug}-${line.size}`} className="flex items-center justify-between px-4 py-3 font-mono text-sm">

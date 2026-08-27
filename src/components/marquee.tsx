@@ -1,14 +1,5 @@
-const ITEMS = [
-  "БЕСПЛАТНАЯ ДОСТАВКА ОТ 15 000 ₽",
-  "ДРОП 003 — КАПСУЛА ARCTIC",
-  "ЛИМИТИРОВАННАЯ ПАРТИЯ — БЕЗ РЕСТОКА",
-  "ТОЛЬКО ПЛОТНЫЙ ХЛОПОК",
-  "ИЗГОТОВЛЕНИЕ НА ЗАКАЗ",
-  "ФИРМА ВЕНИКОВ НЕ ВЯЖЕТ",
-];
-
-export function Marquee() {
-  const line = ITEMS.join("   ///   ") + "   ///   ";
+export function Marquee({ text }: { text: string }) {
+  const line = `${text}   `;
   return (
     <div
       className="w-full overflow-hidden border-b-2 border-fg bg-fg text-bg py-2"

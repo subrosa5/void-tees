@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Таблица размеров — VOID." };
+export const dynamic = "force-dynamic";
 
 const ROWS = [
   { size: "XS", chest: "86–91 см", length: "66 см" },

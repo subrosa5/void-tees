@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/cart-context";
-import { TeeGraphic } from "@/components/tee-graphic";
+import { ProductVisual } from "@/components/product-visual";
 import { formatPrice, TAG_LABELS, type Product } from "@/lib/products";
 
 export function ProductDetail({ product }: { product: Product }) {
@@ -14,12 +14,7 @@ export function ProductDetail({ product }: { product: Product }) {
   return (
     <div className="grid gap-10 md:grid-cols-2">
       <div className="border-2 border-fg bg-hairline/30 aspect-[4/5]">
-        <TeeGraphic
-          color={product.color}
-          print={product.print}
-          name={product.name}
-          className="h-full w-full"
-        />
+        <ProductVisual product={product} className="h-full w-full" />
       </div>
 
       <div>
