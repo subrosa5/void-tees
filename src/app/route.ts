@@ -48,12 +48,26 @@ export async function GET() {
     out = out.replaceAll(from, to);
   };
 
+  // Card 1 and card 2 both default to "5 000 ₽" — a bare price swap can't
+  // tell the two apart, so name+price are replaced together as one block,
+  // anchored on the (default, so always-present) name text right before it.
+  const namePriceBlock = (name: string, price: number) =>
+    `>${escapeForPackedTemplate(name)}</span>\n        <span style="font-family:var(--font-heading);font-weight:800;font-size:18px">${formatPriceForLanding(price)}</span>`;
+
   swap(DEFAULT_MEGA_DATA.heroImage, data.heroImage);
   swap(DEFAULT_MEGA_DATA.productImageFront, data.productImageFront);
   swap(DEFAULT_MEGA_DATA.productImageBack, data.productImageBack);
-  swap(DEFAULT_MEGA_DATA.productName, escapeForPackedTemplate(data.productName));
-  swap(formatPriceForLanding(DEFAULT_MEGA_DATA.price), formatPriceForLanding(data.price));
+  swap(
+    namePriceBlock(DEFAULT_MEGA_DATA.productName, DEFAULT_MEGA_DATA.price),
+    namePriceBlock(data.productName, data.price),
+  );
   swapAll(DEFAULT_MEGA_DATA.tickerText, escapeForPackedTemplate(data.tickerText));
+  swap(DEFAULT_MEGA_DATA.card2ImageFront, data.card2ImageFront);
+  swap(DEFAULT_MEGA_DATA.card2ImageBack, data.card2ImageBack);
+  swap(
+    namePriceBlock(DEFAULT_MEGA_DATA.card2Name, DEFAULT_MEGA_DATA.card2Price),
+    namePriceBlock(data.card2Name, data.card2Price),
+  );
 
   return new Response(out, {
     headers: {

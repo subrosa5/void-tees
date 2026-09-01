@@ -42,25 +42,32 @@ export async function logoutAction() {
 export async function updateMegaTextAction(formData: FormData) {
   const productName = String(formData.get("productName") ?? "").trim();
   const tickerText = String(formData.get("tickerText") ?? "").trim();
-  const priceRaw = String(formData.get("price") ?? "");
-  const price = Math.round(Number(priceRaw));
-  if (!productName) {
+  const card2Name = String(formData.get("card2Name") ?? "").trim();
+  const price = Math.round(Number(formData.get("price") ?? ""));
+  const card2Price = Math.round(Number(formData.get("card2Price") ?? ""));
+  if (!productName || !card2Name) {
     return { ok: false, error: "Название не может быть пустым" };
   }
   if (!tickerText) {
     return { ok: false, error: "Бегущая строка не может быть пустой" };
   }
-  if (!Number.isFinite(price) || price <= 0) {
+  if (!Number.isFinite(price) || price <= 0 || !Number.isFinite(card2Price) || card2Price <= 0) {
     return { ok: false, error: "Некорректная цена" };
   }
   const current = await getMegaData();
-  await saveMegaData({ ...current, productName, tickerText, price });
+  await saveMegaData({ ...current, productName, tickerText, price, card2Name, card2Price });
   revalidatePath("/");
   revalidatePath("/admin");
   return { ok: true };
 }
 
-const MEGA_IMAGE_FIELDS = ["heroImage", "productImageFront", "productImageBack"] as const;
+const MEGA_IMAGE_FIELDS = [
+  "heroImage",
+  "productImageFront",
+  "productImageBack",
+  "card2ImageFront",
+  "card2ImageBack",
+] as const;
 type MegaImageField = (typeof MEGA_IMAGE_FIELDS)[number];
 
 export async function uploadMegaImageAction(formData: FormData) {

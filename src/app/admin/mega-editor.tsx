@@ -25,7 +25,7 @@ function ImageUploadRow({
   label,
   currentUrl,
 }: {
-  field: "heroImage" | "productImageFront" | "productImageBack";
+  field: "heroImage" | "productImageFront" | "productImageBack" | "card2ImageFront" | "card2ImageBack";
   label: string;
   currentUrl: string;
 }) {
@@ -69,15 +69,14 @@ export function MegaEditor({ data }: { data: MegaData }) {
   return (
     <div className="flex flex-col gap-4">
       <p className="font-mono text-[11px] text-muted">
-        Это карточка <strong>№1</strong> в разделе «ВЫБОР» на главной — та, что сейчас показывает{" "}
-        <strong>{data.productName}</strong>. Вторая карточка («МОДЕЛЬ 02») — нередактируемая заглушка
-        из макета, не настоящий товар.
+        В разделе «ВЫБОР» на главной сейчас две карточки: №1 — «{data.productName}», №2 — «{data.card2Name}».
+        Обе настоящие и полностью редактируются ниже.
       </p>
 
       <form action={textFormAction} className="flex flex-col gap-4 border-2 border-fg p-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
           <div className="flex-1">
-            <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">НАЗВАНИЕ ТОВАРА (карточка №1)</label>
+            <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">НАЗВАНИЕ (карточка №1)</label>
             <input
               type="text"
               name="productName"
@@ -93,6 +92,29 @@ export function MegaEditor({ data }: { data: MegaData }) {
               min={1}
               step={1}
               defaultValue={data.price}
+              className="w-28 border-2 border-fg bg-bg px-2 py-2 font-mono text-sm focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+          <div className="flex-1">
+            <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">НАЗВАНИЕ (карточка №2)</label>
+            <input
+              type="text"
+              name="card2Name"
+              defaultValue={data.card2Name}
+              className="w-full border-2 border-fg bg-bg px-3 py-2 font-mono text-sm focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">ЦЕНА, ₽</label>
+            <input
+              type="number"
+              name="card2Price"
+              min={1}
+              step={1}
+              defaultValue={data.card2Price}
               className="w-28 border-2 border-fg bg-bg px-2 py-2 font-mono text-sm focus:outline-none"
             />
           </div>
@@ -119,8 +141,10 @@ export function MegaEditor({ data }: { data: MegaData }) {
       </form>
 
       <ImageUploadRow field="heroImage" label="ФОТО ХИРО (фон на весь экран)" currentUrl={data.heroImage} />
-      <ImageUploadRow field="productImageFront" label="ФОТО ТОВАРА — СПЕРЕДИ (карточка №1)" currentUrl={data.productImageFront} />
-      <ImageUploadRow field="productImageBack" label="ФОТО ТОВАРА — СЗАДИ (карточка №1)" currentUrl={data.productImageBack} />
+      <ImageUploadRow field="productImageFront" label="ФОТО — СПЕРЕДИ (карточка №1)" currentUrl={data.productImageFront} />
+      <ImageUploadRow field="productImageBack" label="ФОТО — СЗАДИ (карточка №1)" currentUrl={data.productImageBack} />
+      <ImageUploadRow field="card2ImageFront" label="ФОТО — СПЕРЕДИ (карточка №2)" currentUrl={data.card2ImageFront} />
+      <ImageUploadRow field="card2ImageBack" label="ФОТО — СЗАДИ (карточка №2)" currentUrl={data.card2ImageBack} />
     </div>
   );
 }

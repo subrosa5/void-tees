@@ -10,6 +10,12 @@ export type MegaData = {
    * from SiteSettings.marqueeText, which only covers the old /shop, /about
    * etc. pages. One phrase, repeated across the loop. */
   tickerText: string;
+  /** Card 2 in "ВЫБОР" — a second real product/photo set, independent of
+   * card 1 above. */
+  card2ImageFront: string;
+  card2ImageBack: string;
+  card2Name: string;
+  card2Price: number;
 };
 
 const STORE_PATH = "mega/mega.json";
@@ -23,6 +29,10 @@ export const DEFAULT_MEGA_DATA: MegaData = {
   productName: "MAKE ЕВПАТОРИЯ GREAT AGAIN",
   price: 5000,
   tickerText: "ФУТБОЛКИ С ДУШОЙ",
+  card2ImageFront: "/mega-assets/card2-front.jpg",
+  card2ImageBack: "/mega-assets/card2-back.jpg",
+  card2Name: "MEGA TEE",
+  card2Price: 5000,
 };
 
 async function findStoreUrl(): Promise<string | null> {
