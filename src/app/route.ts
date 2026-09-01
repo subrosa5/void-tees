@@ -8,9 +8,17 @@ import path from "path";
 // this file is returned exactly as it was exported, byte for byte.
 const FILE_PATH = path.join(process.cwd(), "content", "mega-drop.html");
 
+// Without this, Next treats a GET handler with no dynamic APIs as static
+// and bakes the response in at build time — the CDN (and then the browser)
+// then keeps serving that snapshot after a redeploy changes the file.
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const html = await readFile(FILE_PATH, "utf-8");
   return new Response(html, {
-    headers: { "content-type": "text/html; charset=utf-8" },
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "no-store",
+    },
   });
 }
