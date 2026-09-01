@@ -11,13 +11,19 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   const { products, settings } = await getStoreData();
   const NEW_ARRIVALS = products.filter((p) => p.tag === "NEW" || p.tag === "LIMITED").slice(0, 4);
-  const arcticProduct = products.find((p) => p.collection === "ARCTIC") ?? products[0];
+  const featuredProduct = products.find((p) => p.collection === "MEGA") ?? products[0];
 
-  const CATEGORY_TILES: { label: string; href: string; product: Product }[] = [
-    { label: "МУЖСКОЕ", href: "/shop?category=men", product: products.find((p) => p.category === "men")! },
-    { label: "ЖЕНСКОЕ", href: "/shop?category=women", product: products.find((p) => p.category === "women")! },
-    { label: "УНИСЕКС", href: "/shop?category=unisex", product: products.find((p) => p.category === "unisex")! },
+  const CATEGORY_DEFS: { label: string; href: string; category: Product["category"] }[] = [
+    { label: "МУЖСКОЕ", href: "/shop?category=men", category: "men" },
+    { label: "ЖЕНСКОЕ", href: "/shop?category=women", category: "women" },
+    { label: "УНИСЕКС", href: "/shop?category=unisex", category: "unisex" },
   ];
+  // Only show a tile once a product actually exists for that category —
+  // with a small seed catalog most of these are empty for now.
+  const CATEGORY_TILES = CATEGORY_DEFS.flatMap(({ category, ...rest }) => {
+    const product = products.find((p) => p.category === category);
+    return product ? [{ ...rest, product }] : [];
+  });
 
   return (
     <>
@@ -27,7 +33,7 @@ export default async function Home() {
         <div className="relative mx-auto max-w-[1600px] px-4 pt-14 pb-10 sm:px-6 sm:pt-20">
           <div className="flex items-center justify-between font-mono text-[11px] tracking-[0.15em] opacity-70 mb-6">
             <span>ОДЕЖДА ДЛЯ ТИХИХ ЧАСОВ</span>
-            <span className="hidden sm:inline">ДРОП 003 — ARCTIC</span>
+            <span className="hidden sm:inline">ДРОП 001 — MEGA</span>
           </div>
 
           <h1 className="font-display leading-[0.82] tracking-tight text-[20vw] sm:text-[16vw] md:text-[13rem] select-none">
@@ -46,10 +52,10 @@ export default async function Home() {
                 В КАТАЛОГ
               </Link>
               <Link
-                href="/shop?collection=ARCTIC"
+                href="/shop?collection=MEGA"
                 className="border-2 border-bg px-6 py-3 font-mono text-xs tracking-[0.15em] hover:bg-bg hover:text-fg transition-colors duration-150"
               >
-                КАПСУЛА ARCTIC
+                ДРОП MEGA
               </Link>
             </div>
           </div>
@@ -99,24 +105,25 @@ export default async function Home() {
         <BrushField className="absolute inset-0 h-full w-full" invert={false} />
         <div className="relative mx-auto max-w-[1600px] px-4 py-20 sm:px-6 grid gap-10 md:grid-cols-2 md:items-center">
           <div className="h-64 sm:h-80 md:h-96 border-2 border-bg/40 bg-bg/5 mx-auto w-48 sm:w-56 md:w-64">
-            <ProductVisual product={arcticProduct} className="h-full w-full" />
+            <ProductVisual product={featuredProduct} className="h-full w-full" />
           </div>
           <div>
             <p className="font-mono text-xs tracking-[0.15em] opacity-60 mb-4">
-              КАПСУЛА ARCTIC — 03
+              MEGA — ДРОП 01
             </p>
             <blockquote className="font-display text-3xl sm:text-5xl leading-[0.95] tracking-tight mb-6">
-              &laquo;Я ВСЁ ЖДУ, КОГДА ИЗМЕНИТСЯ МИР&raquo;
+              &laquo;MAKE ЕВПАТОРИЯ GREAT AGAIN&raquo;
             </blockquote>
             <p className="max-w-md font-mono text-sm opacity-70 mb-8">
-              Пигментное крашение с эффектом холодной стирки. Узкий шрифт
-              на спине. Двести штук — и капсулы больше не будет.
+              Настоящий образец, не рендер. Акроним на груди, вордмарк на
+              спине, плотный оверсайз-хлопок — первая вещь из каталога,
+              снятая вживую, а не нарисованная.
             </p>
             <Link
-              href="/shop?collection=ARCTIC"
+              href={`/product/${featuredProduct.slug}`}
               className="inline-block border-2 border-bg px-6 py-3 font-mono text-xs tracking-[0.15em] hover:bg-bg hover:text-fg transition-colors duration-150"
             >
-              СМОТРЕТЬ КАПСУЛУ
+              СМОТРЕТЬ ТОВАР
             </Link>
           </div>
         </div>
