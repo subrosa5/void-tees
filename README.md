@@ -1,3 +1,9 @@
+# VOID.
+
+Витрина стритвир-футболок на Next.js: каталог, корзина, чекаут-демо и админка (редактирование цен/фото через Vercel Blob).
+
+**Живой сайт:** [void-tees.vercel.app](https://void-tees.vercel.app)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
