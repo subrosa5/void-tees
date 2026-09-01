@@ -6,7 +6,7 @@ import { ProductRow } from "@/app/admin/product-row";
 import { SettingsForm } from "@/app/admin/settings-form";
 import { MegaEditor } from "@/app/admin/mega-editor";
 
-export const metadata: Metadata = { title: "Админка — VOID." };
+export const metadata: Metadata = { title: "Админка — MEGA" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {

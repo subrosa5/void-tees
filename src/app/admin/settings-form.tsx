@@ -29,22 +29,12 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
   return (
     <form action={formAction} className="space-y-6">
       <div>
-        <label htmlFor="heroTagline" className="font-mono text-xs tracking-[0.1em] block mb-2">
-          ТЕКСТ ПОД ЗАГОЛОВКОМ НА ГЛАВНОЙ
-        </label>
-        <textarea
-          id="heroTagline"
-          name="heroTagline"
-          defaultValue={settings.heroTagline}
-          rows={3}
-          className="w-full border-2 border-fg bg-bg px-3 py-2 font-mono text-sm focus:outline-none"
-        />
-      </div>
-
-      <div>
         <label htmlFor="marqueeText" className="font-mono text-xs tracking-[0.1em] block mb-2">
-          БЕГУЩАЯ СТРОКА ВВЕРХУ САЙТА
+          БЕГУЩАЯ СТРОКА НА СТРАНИЦАХ КАТАЛОГА (/shop, /about и т.п.)
         </label>
+        <p className="font-mono text-[10px] text-muted mb-2">
+          Не влияет на главную (/) — там своя бегущая строка, редактируется выше в блоке «ГЛАВНАЯ — MEGA».
+        </p>
         <textarea
           id="marqueeText"
           name="marqueeText"

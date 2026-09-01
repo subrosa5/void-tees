@@ -68,35 +68,59 @@ export function MegaEditor({ data }: { data: MegaData }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <form action={textFormAction} className="flex flex-col gap-4 border-2 border-fg p-4 sm:flex-row sm:items-end">
-        <div className="flex-1">
-          <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">НАЗВАНИЕ ТОВАРА</label>
+      <p className="font-mono text-[11px] text-muted">
+        Это карточка <strong>№1</strong> в разделе «ВЫБОР» на главной — та, что сейчас показывает{" "}
+        <strong>{data.productName}</strong>. Вторая карточка («МОДЕЛЬ 02») — нередактируемая заглушка
+        из макета, не настоящий товар.
+      </p>
+
+      <form action={textFormAction} className="flex flex-col gap-4 border-2 border-fg p-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+          <div className="flex-1">
+            <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">НАЗВАНИЕ ТОВАРА (карточка №1)</label>
+            <input
+              type="text"
+              name="productName"
+              defaultValue={data.productName}
+              className="w-full border-2 border-fg bg-bg px-3 py-2 font-mono text-sm focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">ЦЕНА, ₽</label>
+            <input
+              type="number"
+              name="price"
+              min={1}
+              step={1}
+              defaultValue={data.price}
+              className="w-28 border-2 border-fg bg-bg px-2 py-2 font-mono text-sm focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">
+            БЕГУЩАЯ СТРОКА НА ГЛАВНОЙ (под хиро) — не то же самое, что «Бегущая строка» в настройках
+            ниже, та относится к старым страницам /shop, /about
+          </label>
           <input
             type="text"
-            name="productName"
-            defaultValue={data.productName}
+            name="tickerText"
+            defaultValue={data.tickerText}
             className="w-full border-2 border-fg bg-bg px-3 py-2 font-mono text-sm focus:outline-none"
           />
         </div>
-        <div>
-          <label className="font-mono text-[10px] tracking-[0.1em] block mb-1">ЦЕНА, ₽</label>
-          <input
-            type="number"
-            name="price"
-            min={1}
-            step={1}
-            defaultValue={data.price}
-            className="w-28 border-2 border-fg bg-bg px-2 py-2 font-mono text-sm focus:outline-none"
-          />
+
+        <div className="flex items-center gap-3">
+          <SubmitButton label="СОХРАНИТЬ" />
+          {textState?.error && <p className="font-mono text-[10px] text-danger">{textState.error}</p>}
+          {textState?.ok && <p className="font-mono text-[10px] text-muted">Сохранено</p>}
         </div>
-        <SubmitButton label="СОХРАНИТЬ" />
-        {textState?.error && <p className="font-mono text-[10px] text-danger">{textState.error}</p>}
-        {textState?.ok && <p className="font-mono text-[10px] text-muted">Сохранено</p>}
       </form>
 
       <ImageUploadRow field="heroImage" label="ФОТО ХИРО (фон на весь экран)" currentUrl={data.heroImage} />
-      <ImageUploadRow field="productImageFront" label="ФОТО ТОВАРА — СПЕРЕДИ" currentUrl={data.productImageFront} />
-      <ImageUploadRow field="productImageBack" label="ФОТО ТОВАРА — СЗАДИ" currentUrl={data.productImageBack} />
+      <ImageUploadRow field="productImageFront" label="ФОТО ТОВАРА — СПЕРЕДИ (карточка №1)" currentUrl={data.productImageFront} />
+      <ImageUploadRow field="productImageBack" label="ФОТО ТОВАРА — СЗАДИ (карточка №1)" currentUrl={data.productImageBack} />
     </div>
   );
 }

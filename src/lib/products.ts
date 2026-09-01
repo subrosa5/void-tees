@@ -23,15 +23,12 @@ export type Product = {
 };
 
 export type SiteSettings = {
-  heroTagline: string;
   marqueeText: string;
   freeShippingThreshold: number;
   flatShippingRate: number;
 };
 
 export const DEFAULT_SETTINGS: SiteSettings = {
-  heroTagline:
-    "MEGA. Плотные футболки в монохроме — никакого шума, только ткань, принт и пространство между ними.",
   marqueeText:
     "БЕСПЛАТНАЯ ДОСТАВКА ОТ 15 000 ₽ /// ДРОП 001 — MEGA /// ЛИМИТИРОВАННАЯ ПАРТИЯ — БЕЗ РЕСТОКА /// ТОЛЬКО ПЛОТНЫЙ ХЛОПОК /// ИЗГОТОВЛЕНИЕ НА ЗАКАЗ /// ФИРМА ВЕНИКОВ НЕ ВЯЖЕТ",
   freeShippingThreshold: 15000,

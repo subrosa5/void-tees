@@ -6,6 +6,10 @@ export type MegaData = {
   productImageBack: string;
   productName: string;
   price: number;
+  /** The landing's own scrolling ticker, right under the hero — separate
+   * from SiteSettings.marqueeText, which only covers the old /shop, /about
+   * etc. pages. One phrase, repeated across the loop. */
+  tickerText: string;
 };
 
 const STORE_PATH = "mega/mega.json";
@@ -18,6 +22,7 @@ export const DEFAULT_MEGA_DATA: MegaData = {
   productImageBack: "/mega-assets/product-back.jpg",
   productName: "MAKE ЕВПАТОРИЯ GREAT AGAIN",
   price: 5000,
+  tickerText: "ФУТБОЛКИ С ДУШОЙ",
 };
 
 async function findStoreUrl(): Promise<string | null> {

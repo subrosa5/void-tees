@@ -41,12 +41,19 @@ export async function GET() {
     if (from === to) return;
     out = out.replace(from, to);
   };
+  // The ticker repeats its one phrase 8× in the packed component's data —
+  // every occurrence needs swapping, not just the first.
+  const swapAll = (from: string, to: string) => {
+    if (from === to) return;
+    out = out.replaceAll(from, to);
+  };
 
   swap(DEFAULT_MEGA_DATA.heroImage, data.heroImage);
   swap(DEFAULT_MEGA_DATA.productImageFront, data.productImageFront);
   swap(DEFAULT_MEGA_DATA.productImageBack, data.productImageBack);
   swap(DEFAULT_MEGA_DATA.productName, escapeForPackedTemplate(data.productName));
   swap(formatPriceForLanding(DEFAULT_MEGA_DATA.price), formatPriceForLanding(data.price));
+  swapAll(DEFAULT_MEGA_DATA.tickerText, escapeForPackedTemplate(data.tickerText));
 
   return new Response(out, {
     headers: {

@@ -20,6 +20,14 @@ function revalidatePublicPages(slug?: string) {
   if (slug) revalidatePath(`/product/${slug}`);
 }
 
+/** Shared by both image-upload actions below — same rules either way. */
+function validateImageFile(entry: FormDataEntryValue | null): { file: File } | { error: string } {
+  if (!(entry instanceof File) || entry.size === 0) return { error: "Файл не выбран" };
+  if (!entry.type.startsWith("image/")) return { error: "Нужен файл изображения" };
+  if (entry.size > 8 * 1024 * 1024) return { error: "Файл больше 8 МБ" };
+  return { file: entry };
+}
+
 export async function loginAction(formData: FormData) {
   const password = String(formData.get("password") ?? "");
   const ok = await checkPassword(password);
@@ -59,17 +67,10 @@ export async function updatePriceAction(formData: FormData) {
 
 export async function uploadImageAction(formData: FormData) {
   const slug = String(formData.get("slug") ?? "");
-  const file = formData.get("file");
-  if (!slug || !(file instanceof File) || file.size === 0) {
-    return { ok: false, error: "Файл не выбран" };
-  }
-  if (!file.type.startsWith("image/")) {
-    return { ok: false, error: "Нужен файл изображения" };
-  }
-  if (file.size > 8 * 1024 * 1024) {
-    return { ok: false, error: "Файл больше 8 МБ" };
-  }
-  const url = await uploadProductImage(slug, file);
+  if (!slug) return { ok: false, error: "Не указан товар" };
+  const validated = validateImageFile(formData.get("file"));
+  if ("error" in validated) return { ok: false, error: validated.error };
+  const url = await uploadProductImage(slug, validated.file);
   await updateProductImage(slug, url);
   revalidatePublicPages(slug);
   revalidatePath("/admin");
@@ -78,16 +79,20 @@ export async function uploadImageAction(formData: FormData) {
 
 export async function updateMegaTextAction(formData: FormData) {
   const productName = String(formData.get("productName") ?? "").trim();
+  const tickerText = String(formData.get("tickerText") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "");
   const price = Math.round(Number(priceRaw));
   if (!productName) {
     return { ok: false, error: "Название не может быть пустым" };
   }
+  if (!tickerText) {
+    return { ok: false, error: "Бегущая строка не может быть пустой" };
+  }
   if (!Number.isFinite(price) || price <= 0) {
     return { ok: false, error: "Некорректная цена" };
   }
   const current = await getMegaData();
-  await saveMegaData({ ...current, productName, price });
+  await saveMegaData({ ...current, productName, tickerText, price });
   revalidatePath("/");
   revalidatePath("/admin");
   return { ok: true };
@@ -98,20 +103,10 @@ type MegaImageField = (typeof MEGA_IMAGE_FIELDS)[number];
 
 export async function uploadMegaImageAction(formData: FormData) {
   const field = String(formData.get("field") ?? "") as MegaImageField;
-  const file = formData.get("file");
-  if (!MEGA_IMAGE_FIELDS.includes(field)) {
-    return { ok: false, error: "Неизвестное поле" };
-  }
-  if (!(file instanceof File) || file.size === 0) {
-    return { ok: false, error: "Файл не выбран" };
-  }
-  if (!file.type.startsWith("image/")) {
-    return { ok: false, error: "Нужен файл изображения" };
-  }
-  if (file.size > 8 * 1024 * 1024) {
-    return { ok: false, error: "Файл больше 8 МБ" };
-  }
-  const url = await uploadMegaImage(file, field);
+  if (!MEGA_IMAGE_FIELDS.includes(field)) return { ok: false, error: "Неизвестное поле" };
+  const validated = validateImageFile(formData.get("file"));
+  if ("error" in validated) return { ok: false, error: validated.error };
+  const url = await uploadMegaImage(validated.file, field);
   const current = await getMegaData();
   const next: MegaData = { ...current, [field]: url };
   await saveMegaData(next);
@@ -122,7 +117,6 @@ export async function uploadMegaImageAction(formData: FormData) {
 
 export async function updateSettingsAction(formData: FormData) {
   const settings: SiteSettings = {
-    heroTagline: String(formData.get("heroTagline") ?? ""),
     marqueeText: String(formData.get("marqueeText") ?? ""),
     freeShippingThreshold: Math.max(0, Math.round(Number(formData.get("freeShippingThreshold") ?? 0))),
     flatShippingRate: Math.max(0, Math.round(Number(formData.get("flatShippingRate") ?? 0))),

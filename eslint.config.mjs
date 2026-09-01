@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local scratch tooling (gitignored) — third-party minified bundle
+    // assets in here aren't project code and shouldn't be linted as such.
+    ".imgtools/**",
   ]),
 ]);
 
