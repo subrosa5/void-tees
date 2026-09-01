@@ -17,6 +17,54 @@
       This page requires JavaScript to display.
     </div>
   </noscript>
+  <!--
+    Mobile patch — added on top of the unpacked page, not part of the
+    original export. Every rule here only overrides a fixed px value from
+    the page's own inline styles (font-size/padding/grid columns) so it
+    scales down under ~640px; nothing is restyled, reworded, or re-laid-out
+    beyond that. !important is required because inline style="" attributes
+    outrank an ordinary stylesheet rule.
+  -->
+  <style>
+    @media (max-width: 640px) {
+      [data-screen-label="Герой"] h1 { font-size: clamp(52px, 17vw, 186px) !important; }
+      [data-screen-label="Герой"] > div:nth-child(3) { padding: 18px 16px !important; }
+      [data-screen-label="Герой"] > div:nth-child(4) { padding: 0 16px 32px !important; }
+      #vybor { padding: 40px 16px 20px !important; }
+      #vybor h2 { font-size: clamp(30px, 10vw, 52px) !important; }
+      [data-swap] > div:last-child {
+        padding: 16px 16px 20px !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      [data-swap] > div:last-child > span:first-child {
+        font-size: clamp(18px, 5.5vw, 28px) !important;
+      }
+      [data-screen-label="Производство"] > div { padding: 40px 16px !important; }
+      [data-screen-label="Производство"] h3 { font-size: clamp(26px, 8vw, 40px) !important; }
+      [data-screen-label="Как купить"] {
+        grid-template-columns: 1fr !important;
+      }
+      [data-screen-label="Как купить"] > div {
+        padding: 28px 16px !important;
+        border-right: none !important;
+        border-bottom: 1px solid color-mix(in srgb, #f3f2f2 22%, transparent);
+      }
+      [data-screen-label="Как купить"] > div:last-child { border-bottom: none !important; }
+      [data-screen-label="Подписка"] { padding: 40px 16px !important; }
+      [data-screen-label="Подписка"] > div {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        max-width: none !important;
+      }
+      div[style*="padding:32px 40px"] {
+        padding: 24px 16px !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="__bundler_thumbnail">
