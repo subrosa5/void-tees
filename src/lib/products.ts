@@ -18,6 +18,8 @@ export type Product = {
   details: string[];
   /** Admin-uploaded product photo. Falls back to the illustrated TeeGraphic when unset. */
   image?: string;
+  /** Extra gallery shots for the product page (front/back, different treatments). Falls back to just `image` when unset. */
+  images?: string[];
 };
 
 export type SiteSettings = {
@@ -226,9 +228,35 @@ export const PRODUCTS: Product[] = [
       "Лимитированная партия",
     ],
   },
+  {
+    slug: "mega-evpatoria-tee-black",
+    name: "MEGA EVPATORIA TEE",
+    price: 6990,
+    category: "unisex",
+    collection: "MEGA",
+    color: "black",
+    print: "wordmark",
+    tag: "NEW",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    description:
+      "Настоящий дроп, не рендер. Акроним на груди, крупный вордмарк на спине — локальная гордость, оверсайз-крой, плотный хлопок.",
+    details: [
+      "260 г/м², плотный хлопковый трикотаж",
+      "Вышивка на груди, шелкография на спине",
+      "Оверсайз-крой, опущенная линия плеча",
+      "Фото — реальный образец, не иллюстрация",
+    ],
+    image: "/products/mega-front-atmospheric.jpg",
+    images: [
+      "/products/mega-front-atmospheric.jpg",
+      "/products/mega-back-atmospheric.jpg",
+      "/products/mega-front-clean.jpg",
+      "/products/mega-back-clean.jpg",
+    ],
+  },
 ];
 
-export const COLLECTIONS = ["CORE", "ARCTIC", "BLACKOUT"] as const;
+export const COLLECTIONS = ["CORE", "ARCTIC", "BLACKOUT", "MEGA"] as const;
 
 export function getProduct(slug: string) {
   return PRODUCTS.find((p) => p.slug === slug);

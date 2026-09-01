@@ -11,10 +11,43 @@ export function ProductDetail({ product }: { product: Product }) {
   const [error, setError] = useState(false);
   const { addItem } = useCart();
 
+  const gallery = product.images?.length ? product.images : undefined;
+  const [activeImage, setActiveImage] = useState(gallery?.[0]);
+
   return (
     <div className="grid gap-10 md:grid-cols-2">
-      <div className="border-2 border-fg bg-hairline/30 aspect-[4/5]">
-        <ProductVisual product={product} className="h-full w-full" />
+      <div>
+        <div className="border-2 border-fg bg-hairline/30 aspect-[4/5]">
+          {gallery ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={activeImage ?? gallery[0]}
+              alt={product.name}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <ProductVisual product={product} className="h-full w-full" />
+          )}
+        </div>
+        {gallery && gallery.length > 1 && (
+          <div className="mt-3 grid grid-cols-4 gap-3">
+            {gallery.map((src) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setActiveImage(src)}
+                aria-label="Показать это фото"
+                aria-pressed={activeImage === src}
+                className={`aspect-[4/5] border-2 cursor-pointer overflow-hidden ${
+                  activeImage === src ? "border-fg" : "border-hairline hover:border-fg"
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" className="h-full w-full object-cover" />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div>

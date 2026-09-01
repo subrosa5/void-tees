@@ -10,6 +10,7 @@ const NAV = [
   { label: "CORE", href: "/shop?collection=CORE" },
   { label: "ARCTIC", href: "/shop?collection=ARCTIC" },
   { label: "BLACKOUT", href: "/shop?collection=BLACKOUT" },
+  { label: "MEGA", href: "/shop?collection=MEGA" },
   { label: "О БРЕНДЕ", href: "/about" },
 ];
 
@@ -38,7 +39,7 @@ export function SiteHeader({ marqueeText }: { marqueeText: string }) {
           </button>
 
           <nav className="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.12em]">
-            {NAV.slice(0, 4).map((item) => (
+            {NAV.slice(0, 5).map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
