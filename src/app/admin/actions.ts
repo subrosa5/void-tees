@@ -10,6 +10,7 @@ import {
   updateProductImage,
   uploadProductImage,
 } from "@/lib/blob-store";
+import { getMegaData, saveMegaData, uploadMegaImage, type MegaData } from "@/lib/mega-store";
 import type { SiteSettings } from "@/lib/products";
 
 function revalidatePublicPages(slug?: string) {
@@ -71,6 +72,50 @@ export async function uploadImageAction(formData: FormData) {
   const url = await uploadProductImage(slug, file);
   await updateProductImage(slug, url);
   revalidatePublicPages(slug);
+  revalidatePath("/admin");
+  return { ok: true, url };
+}
+
+export async function updateMegaTextAction(formData: FormData) {
+  const productName = String(formData.get("productName") ?? "").trim();
+  const priceRaw = String(formData.get("price") ?? "");
+  const price = Math.round(Number(priceRaw));
+  if (!productName) {
+    return { ok: false, error: "Название не может быть пустым" };
+  }
+  if (!Number.isFinite(price) || price <= 0) {
+    return { ok: false, error: "Некорректная цена" };
+  }
+  const current = await getMegaData();
+  await saveMegaData({ ...current, productName, price });
+  revalidatePath("/");
+  revalidatePath("/admin");
+  return { ok: true };
+}
+
+const MEGA_IMAGE_FIELDS = ["heroImage", "productImageFront", "productImageBack"] as const;
+type MegaImageField = (typeof MEGA_IMAGE_FIELDS)[number];
+
+export async function uploadMegaImageAction(formData: FormData) {
+  const field = String(formData.get("field") ?? "") as MegaImageField;
+  const file = formData.get("file");
+  if (!MEGA_IMAGE_FIELDS.includes(field)) {
+    return { ok: false, error: "Неизвестное поле" };
+  }
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, error: "Файл не выбран" };
+  }
+  if (!file.type.startsWith("image/")) {
+    return { ok: false, error: "Нужен файл изображения" };
+  }
+  if (file.size > 8 * 1024 * 1024) {
+    return { ok: false, error: "Файл больше 8 МБ" };
+  }
+  const url = await uploadMegaImage(file, field);
+  const current = await getMegaData();
+  const next: MegaData = { ...current, [field]: url };
+  await saveMegaData(next);
+  revalidatePath("/");
   revalidatePath("/admin");
   return { ok: true, url };
 }
