@@ -3,19 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Marquee } from "@/components/marquee";
-import { useCart } from "@/components/cart-context";
 
 const NAV = [
-  { label: "КАТАЛОГ", href: "/shop" },
-  { label: "CORE", href: "/shop?collection=CORE" },
-  { label: "ARCTIC", href: "/shop?collection=ARCTIC" },
-  { label: "BLACKOUT", href: "/shop?collection=BLACKOUT" },
-  { label: "MEGA", href: "/shop?collection=MEGA" },
   { label: "О БРЕНДЕ", href: "/about" },
+  { label: "ДОСТАВКА", href: "/shipping" },
+  { label: "РАЗМЕРЫ", href: "/size-guide" },
 ];
 
 export function SiteHeader({ marqueeText }: { marqueeText: string }) {
-  const { count, openCart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -39,7 +34,7 @@ export function SiteHeader({ marqueeText }: { marqueeText: string }) {
           </button>
 
           <nav className="hidden md:flex items-center gap-6 font-mono text-xs tracking-[0.12em]">
-            {NAV.slice(0, 5).map((item) => (
+            {NAV.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
@@ -58,20 +53,7 @@ export function SiteHeader({ marqueeText }: { marqueeText: string }) {
             VOID<span aria-hidden="true">.</span>
           </Link>
 
-          <div className="flex items-center gap-4 font-mono text-xs tracking-[0.12em]">
-            <Link href="/about" className="hidden md:inline hover:opacity-60 transition-opacity duration-150">
-              О БРЕНДЕ
-            </Link>
-            <button
-              type="button"
-              onClick={openCart}
-              className="flex h-11 min-w-11 items-center justify-center gap-2 border-2 border-fg px-3 cursor-pointer hover:bg-fg hover:text-bg transition-colors duration-150"
-              aria-label={`Открыть корзину, товаров: ${count}`}
-            >
-              КОРЗИНА
-              <span className="font-mono">({count})</span>
-            </button>
-          </div>
+          <div className="w-11 md:w-auto" aria-hidden="true" />
         </div>
 
         {menuOpen && (

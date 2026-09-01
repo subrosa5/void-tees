@@ -4,21 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ADMIN_COOKIE, checkPassword, expectedSessionToken } from "@/lib/admin-auth";
-import {
-  updateProductPrice as saveProductPrice,
-  updateSettings as saveSettings,
-  updateProductImage,
-  uploadProductImage,
-} from "@/lib/blob-store";
 import { getMegaData, saveMegaData, uploadMegaImage, type MegaData } from "@/lib/mega-store";
-import type { SiteSettings } from "@/lib/products";
-
-function revalidatePublicPages(slug?: string) {
-  revalidatePath("/");
-  revalidatePath("/shop");
-  revalidatePath("/checkout");
-  if (slug) revalidatePath(`/product/${slug}`);
-}
+import { saveSettings, type SiteSettings } from "@/lib/site-settings";
 
 /** Shared by both image-upload actions below — same rules either way. */
 function validateImageFile(entry: FormDataEntryValue | null): { file: File } | { error: string } {
@@ -50,31 +37,6 @@ export async function logoutAction() {
   const jar = await cookies();
   jar.delete(ADMIN_COOKIE);
   redirect("/admin/login");
-}
-
-export async function updatePriceAction(formData: FormData) {
-  const slug = String(formData.get("slug") ?? "");
-  const priceRaw = String(formData.get("price") ?? "");
-  const price = Math.round(Number(priceRaw));
-  if (!slug || !Number.isFinite(price) || price <= 0) {
-    return { ok: false, error: "Некорректная цена" };
-  }
-  await saveProductPrice(slug, price);
-  revalidatePublicPages(slug);
-  revalidatePath("/admin");
-  return { ok: true };
-}
-
-export async function uploadImageAction(formData: FormData) {
-  const slug = String(formData.get("slug") ?? "");
-  if (!slug) return { ok: false, error: "Не указан товар" };
-  const validated = validateImageFile(formData.get("file"));
-  if ("error" in validated) return { ok: false, error: validated.error };
-  const url = await uploadProductImage(slug, validated.file);
-  await updateProductImage(slug, url);
-  revalidatePublicPages(slug);
-  revalidatePath("/admin");
-  return { ok: true, url };
 }
 
 export async function updateMegaTextAction(formData: FormData) {
@@ -118,11 +80,11 @@ export async function uploadMegaImageAction(formData: FormData) {
 export async function updateSettingsAction(formData: FormData) {
   const settings: SiteSettings = {
     marqueeText: String(formData.get("marqueeText") ?? ""),
-    freeShippingThreshold: Math.max(0, Math.round(Number(formData.get("freeShippingThreshold") ?? 0))),
-    flatShippingRate: Math.max(0, Math.round(Number(formData.get("flatShippingRate") ?? 0))),
   };
   await saveSettings(settings);
-  revalidatePublicPages();
+  revalidatePath("/about");
+  revalidatePath("/shipping");
+  revalidatePath("/size-guide");
   revalidatePath("/admin");
   return { ok: true };
 }

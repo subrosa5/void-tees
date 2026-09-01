@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import type { SiteSettings } from "@/lib/products";
+import type { SiteSettings } from "@/lib/site-settings";
 import { updateSettingsAction } from "@/app/admin/actions";
 
 type ActionResult = { ok: boolean; error?: string } | null;
@@ -45,35 +45,6 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
         <p className="font-mono text-[10px] text-muted mt-1">
           Разделяйте фразы через &laquo;/// &raquo;
         </p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="freeShippingThreshold" className="font-mono text-xs tracking-[0.1em] block mb-2">
-            БЕСПЛАТНАЯ ДОСТАВКА ОТ, ₽
-          </label>
-          <input
-            id="freeShippingThreshold"
-            name="freeShippingThreshold"
-            type="number"
-            min={0}
-            defaultValue={settings.freeShippingThreshold}
-            className="w-full border-2 border-fg bg-bg px-3 py-2 font-mono text-sm focus:outline-none"
-          />
-        </div>
-        <div>
-          <label htmlFor="flatShippingRate" className="font-mono text-xs tracking-[0.1em] block mb-2">
-            СТОИМОСТЬ ДОСТАВКИ, ₽
-          </label>
-          <input
-            id="flatShippingRate"
-            name="flatShippingRate"
-            type="number"
-            min={0}
-            defaultValue={settings.flatShippingRate}
-            className="w-full border-2 border-fg bg-bg px-3 py-2 font-mono text-sm focus:outline-none"
-          />
-        </div>
       </div>
 
       <div className="flex items-center gap-4">
